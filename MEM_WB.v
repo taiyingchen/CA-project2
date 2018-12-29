@@ -23,13 +23,13 @@ output [31:0] dataMem_data_o, ALU_result_o;
 input [4:0] RDaddr_i;
 output [4:0] RDaddr_o;
 // general signal
-input clk, rst_i;
+input clk_i, rst_i;
 
 reg RegWrite_o, MemtoReg_o;
 reg [31:0] dataMem_data_o, ALU_result_o;
 reg [4:0] RDaddr_o;
 
-always @(posedge clk or posedge rst_i)
+always @(posedge clk_i or posedge rst_i)
 begin
 	if (rst_i == 1'b1)
 	begin

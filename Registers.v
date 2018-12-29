@@ -16,7 +16,7 @@ input	[4:0]		RS1addr_i;
 input	[4:0]		RS2addr_i;
 input	[4:0]		RDaddr_i;
 input	[31:0]		RDdata_i;
-input				sRegWrite_i;
+input				RegWrite_i;
 output	[31:0]		RS1data_o; 
 output	[31:0]		RS2data_o;
 

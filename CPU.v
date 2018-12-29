@@ -31,9 +31,20 @@ output				mem_write_o;
 // add your project1 here!
 //
 
-// --------------------- IF stage --------------------
-
+// Wire
+// IF stage
 wire	[31:0]	instr_addr, instr;
+// ID stage
+wire	[31:0]	RS1data, RS2data;
+// Equal means if Branch succeed (RS1data == RS2data)
+// Branch means the beq instruction in ID stage
+wire    Equal, Branch;
+wire    andGate_o;
+// EX stage
+wire	[31:0]	ALU_result;
+wire	[31:0]	writeBack_data;
+
+// --------------------- IF stage --------------------
 
 MUX32 MUX_PCSrc(
     .data1_i    (Add_PC.data_o), // Branch not taken
@@ -75,12 +86,6 @@ IF_ID IF_ID(
 );
 
 // --------------------- ID stage --------------------
-
-wire	[31:0]	RS1data, RS2data;
-// Equal means if Branch succeed (RS1data == RS2data)
-// Branch means the beq instruction in ID stage
-wire    Equal, Branch;
-wire    andGate_o;
 
 // And gate for branch
 assign 	Equal = (RS1data == RS2data) ? 1 : 0;
@@ -174,9 +179,6 @@ ID_EX ID_EX(
 );
 
 // --------------------- EX stage --------------------
-
-wire	[31:0]	ALU_result;
-wire	[31:0]	writeBack_data;
 
 MUX32_3to1 ALU_input1(
     .data1_i	(ID_EX.RS1data_o), // from Register
