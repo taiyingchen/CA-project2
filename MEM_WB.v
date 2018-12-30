@@ -23,6 +23,7 @@ output reg	[31:0]	dataMem_data_o, ALU_result_o;
 input		[4:0]	RDaddr_i;
 output reg	[4:0]	RDaddr_o;
 // general signal
+input clk_i, rst_i;
 
 always @(posedge clk_i or posedge rst_i)
 begin
