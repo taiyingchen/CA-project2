@@ -64,9 +64,9 @@ PC PC(
 );
 
 Adder Add_PC(
-    .data1_i   (instr_addr),
-    .data2_i   (32'd4),
-    .data_o     (MUX_PCSrc.data1_i)
+	.data1_i	(instr_addr),
+	.data2_i	(32'd4),
+	.data_o		(MUX_PCSrc.data1_i)
 );
 
 Instruction_Memory Instruction_Memory(

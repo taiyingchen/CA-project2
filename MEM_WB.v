@@ -15,19 +15,14 @@ module MEM_WB
 );
 
 // 1. WB control signal
-input RegWrite_i, MemtoReg_i;
-output RegWrite_o, MemtoReg_o;
+input		RegWrite_i, MemtoReg_i;
+output reg	RegWrite_o, MemtoReg_o;
 // 2. data content
-input [31:0] dataMem_data_i, ALU_result_i;
-output [31:0] dataMem_data_o, ALU_result_o;
-input [4:0] RDaddr_i;
-output [4:0] RDaddr_o;
+input		[31:0]	dataMem_data_i, ALU_result_i;
+output reg	[31:0]	dataMem_data_o, ALU_result_o;
+input		[4:0]	RDaddr_i;
+output reg	[4:0]	RDaddr_o;
 // general signal
-input clk_i, rst_i;
-
-reg RegWrite_o, MemtoReg_o;
-reg [31:0] dataMem_data_o, ALU_result_o;
-reg [4:0] RDaddr_o;
 
 always @(posedge clk_i or posedge rst_i)
 begin
