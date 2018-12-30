@@ -144,7 +144,7 @@ ID_EX ID_EX(
 	.signExtend_i		(Sign_Extend.data_o),
 	.RS1data_o			(ALU_input1.data1_i),
 	.RS2data_o			(ALU_input2.data1_i),
-	.signExtend_o		(ALU_input2.data2_i),
+	.signExtend_o		(ALU_input.data2_i),
 	// Register content
 	.RS1addr_i			(instr[19:15]),
 	.RS2addr_i			(instr[24:20]),
@@ -183,7 +183,7 @@ ID_EX ID_EX(
 MUX32_3to1 ALU_input1(
     .data1_i	(ID_EX.RS1data_o), // from Register
     .data2_i	(writeBack_data), // from WB MUX
-    .data3_i	(ALU_result), // ALU result
+    .data3_i	(ALU_result), // from ALU result
 	.select_i	(Forwarding_Unit.forwardA_o),
 	.data_o		(ALU.data1_i)
 );
