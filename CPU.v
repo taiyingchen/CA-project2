@@ -280,7 +280,7 @@ dcache_top dcache
 	.p1_MemRead_i(EX_MEM.MemRead_o), 
 	.p1_MemWrite_i(EX_MEM.MemWrite_o), 
 	.p1_data_o(MEM_WB.dataMem_data_i), 
-	.p1_stall_o()
+	.p1_stall_o(MemStall)
 );
 
 Data_Memory Data_Memory
