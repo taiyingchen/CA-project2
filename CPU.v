@@ -282,12 +282,12 @@ Data_Memory Data_Memory
 (
 	.clk_i		(clk_i),
 	.rst_i		(rst_i),
-	.addr_i		(),
-	.data_i		(),
-	.enable_i	(),
-	.write_i	(),
-	.ack_o		(),
-	.data_o		()
+	.addr_i		(mem_addr_o),
+	.data_i		(mem_data_o),
+	.enable_i	(mem_enable_o),
+	.write_i	(mem_write_o),
+	.ack_o		(mem_ack_i),
+	.data_o		(mem_data_i)
 );
 
 MEM_WB MEM_WB(
