@@ -143,14 +143,14 @@ end
 always@(p1_offset or r_hit_data or p1_data_i) begin
 	//!!! add you code here! (w_hit_data=...?)
 	if (p1_offset==5'b00000) begin
-		w_hit_data <= {r_hit_data[255:8],p1_data_i};
+		w_hit_data <= {r_hit_data[255:32],p1_data_i};
 	end
 	else if (p1_offset==5'b11111) begin
-		w_hit_data <= {p1_data_i,r_hit_data[7:0]};
+		w_hit_data <= {p1_data_i,r_hit_data[223:0]};
 	end
 	else begin
 		w_hit_data <= r_hit_data;
-		w_hit_data[8*p1_offset+:8] <= p1_data_i;
+		w_hit_data[8*p1_offset+:32] <= p1_data_i;
 	end
 end
 
@@ -206,7 +206,6 @@ always@(posedge clk_i or negedge rst_i) begin
 			end
 			STATE_READMISSOK: begin			//wait for data memory acknowledge
 	                //!!! add you code here! 
-				cache_we <= 1'b0;	
 				state <= STATE_IDLE;
 			end
 			STATE_WRITEBACK: begin
