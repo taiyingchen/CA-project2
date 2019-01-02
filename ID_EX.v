@@ -13,6 +13,7 @@ module ID_EX
 	ID_Flush_lwstall_i,
 	RegWrite_i, MemtoReg_i, MemRead_i, MemWrite_i,
 	RegWrite_o, MemtoReg_o, MemRead_o, MemWrite_o,
+	stall_i,
 	clk_i,
 	rst_i
 );
@@ -45,7 +46,10 @@ input	[2:0]	funct3_i;
 input	[6:0]	funct7_i;
 output reg	[2:0]	funct3_o;
 output reg	[6:0]	funct7_o;
-input clk_i, rst_i;
+input	clk_i, rst_i;
+
+// Memory stall
+input	stall_i;
 
 always @(posedge clk_i or posedge rst_i)
 begin
@@ -76,6 +80,23 @@ begin
 		ALUOp_o = 2'b0;
 		funct3_o = 3'b0;
 		funct7_o = 7'b0;
+	end
+	else if (stall_i)
+	begin
+		RegWrite_o = RegWrite_o;
+		MemtoReg_o = MemtoReg_o;
+		MemRead_o = MemRead_o;
+		MemWrite_o = MemWrite_o;
+		ALUSrc_o = ALUSrc_o;
+		ALUOp_o = ALUOp_o;
+		RS1data_o = RS1data_o;
+		RS2data_o = RS2data_o;
+		signExtend_o = signExtend_o;
+		RS1addr_o = RS1addr_o;
+		RS2addr_o = RS2addr_o;
+		RDaddr_o = RDaddr_o;
+		funct3_o = funct3_o;
+		funct7_o = funct7_o;
 	end
 	else begin
 		RegWrite_o = RegWrite_i;

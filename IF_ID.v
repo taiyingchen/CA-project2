@@ -5,6 +5,7 @@ module IF_ID
 	// Control signal
 	IF_ID_Write_i,
 	IF_Flush_i,
+	stall_i,
 	clk_i,
 	rst_i
 );
@@ -14,10 +15,13 @@ input		[31:0]	PC_i, instr_i;
 output reg	[31:0]	PC_o, instr_o;
 
 // Hazard control
-input IF_ID_Write_i, IF_Flush_i;
+input	IF_ID_Write_i, IF_Flush_i;
 
 // General control
-input clk_i, rst_i;
+input	clk_i, rst_i;
+
+// Memory stall
+input	stall_i;
 
 always @(posedge clk_i or posedge rst_i)
 begin
@@ -35,6 +39,11 @@ begin
 	begin
 		PC_o <= PC_i;
 		instr_o <= instr_i;
+	end
+	else if (stall_i)
+	begin
+		PC_o <= PC_o;
+		instr_o <= instr_o;
 	end
 end
 
