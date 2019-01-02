@@ -35,7 +35,7 @@ begin
 		PC_o <= 32'b0;
 		instr_o <= 32'b0;
 	end
-	else if (IF_ID_Write_i == 1'b1)
+	else if (IF_ID_Write_i && ~stall_i)
 	begin
 		PC_o <= PC_i;
 		instr_o <= instr_i;
