@@ -43,6 +43,8 @@ wire    andGate_o;
 // EX stage
 wire	[31:0]	ALU_result;
 wire	[31:0]	writeBack_data;
+// MEM stage
+wire	MemStall;
 
 // --------------------- IF stage --------------------
 
@@ -57,8 +59,8 @@ PC PC(
 	.clk_i(clk_i),
 	.rst_i(rst_i),
 	.start_i(start_i),
-	.stall_i(),
-	.pcEnable_i(),
+	.stall_i(MemStall),
+	.pcEnable_i(Hazard_Detection_Unit.PCWrite_o),
 	.pc_i(MUX_PCSrc.data_o),
 	.pc_o(instr_addr)
 );
@@ -81,6 +83,7 @@ IF_ID IF_ID(
 	.instr_o		(instr),
 	.IF_ID_Write_i	(Hazard_Detection_Unit.IF_ID_Write_o),
 	.IF_Flush_i		(andGate_o),
+	.stall_i		(MemStall),
 	.clk_i			(clk_i),
 	.rst_i			(rst_i)
 );
@@ -132,7 +135,7 @@ Hazard_Detection_Unit Hazard_Detection_Unit(
     .IF_ID_RS1addr_i	(instr[19:15]),
     .IF_ID_RS2addr_i	(instr[24:20]),
     .ID_EX_RDaddr_i		(ID_EX.RDaddr_o),
-    .PCWrite_o			(PC.PCWrite_i),
+    .PCWrite_o			(PC.pcEnable_i),
     .IF_ID_Write_o		(IF_ID.IF_ID_Write_i),
     .ID_Flush_lwstall_o	(ID_EX.ID_Flush_lwstall_i)
 );
@@ -174,6 +177,7 @@ ID_EX ID_EX(
 	.MemtoReg_i			(Control.MemtoReg_o),
 	.RegWrite_o			(EX_MEM.RegWrite_i),
 	.MemtoReg_o			(EX_MEM.MemtoReg_i),
+	.stall_i			(MemStall),
 	.clk_i				(clk_i),
 	.rst_i				(rst_i)
 );
@@ -248,6 +252,7 @@ EX_MEM EX_MEM(
 	.MemtoReg_i			(ID_EX.MemtoReg_o), 
 	.RegWrite_o			(MEM_WB.RegWrite_i), 
 	.MemtoReg_o			(MEM_WB.MemtoReg_i),
+	.stall_i			(MemStall),
 	.clk_i				(clk_i),
 	.rst_i				(rst_i)
 );
@@ -301,6 +306,7 @@ MEM_WB MEM_WB(
 	.ALU_result_o		(MUX_RegSrc.data1_i),
 	.RDaddr_i			(EX_MEM.RDaddr_o),
 	.RDaddr_o			(Registers.RDaddr_i),
+	.stall_i			(MemStall),
 	.clk_i				(clk_i),
 	.rst_i				(rst_i)
 );
