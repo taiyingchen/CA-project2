@@ -81,11 +81,11 @@ initial begin
 	Data_Memory.memory[0] = 256'h5;		// n = 5 for example
 	
     Clk = 0;
-    Reset = 1;
+    Reset = 0;
     Start = 0;
     
     #(`CYCLE_TIME/4) 
-    Reset = 0;
+    Reset = 1;
     Start = 1;
 
     

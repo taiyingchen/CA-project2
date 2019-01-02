@@ -23,9 +23,9 @@ input	clk_i, rst_i;
 // Memory stall
 input	stall_i;
 
-always @(posedge clk_i or posedge rst_i)
+always @(posedge clk_i or negedge rst_i)
 begin
-	if (rst_i == 1'b1)
+	if (~rst_i)
 	begin
 		PC_o <= 32'b0;
 		instr_o <= 32'b0;
