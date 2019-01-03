@@ -131,6 +131,7 @@ Sign_Extend Sign_Extend(
 );
 
 Hazard_Detection_Unit Hazard_Detection_Unit(
+	.Op_i				(instr[6:0]),
     .ID_EX_MemRead_i	(ID_EX.MemRead_o),
     .IF_ID_RS1addr_i	(instr[19:15]),
     .IF_ID_RS2addr_i	(instr[24:20]),
