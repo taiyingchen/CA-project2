@@ -125,8 +125,7 @@ assign	cache_dirty  = write_hit;
 assign	hit = (p1_tag==sram_tag && sram_valid)?1'b1:1'b0;
 assign	r_hit_data = sram_cache_data;
 
-reg	lower;
-reg	upper;
+
 // read data :  256-bit to 32-bit
 always@(p1_offset or r_hit_data) begin
 	//!!! add you code here! (p1_data=...?)
@@ -198,6 +197,7 @@ always@(posedge clk_i or negedge rst_i) begin
 			end
 			STATE_READMISSOK: begin			//wait for data memory acknowledge
 	                //!!! add you code here! 
+				cache_we <= 1'b0;
 				state <= STATE_IDLE;
 			end
 			STATE_WRITEBACK: begin
